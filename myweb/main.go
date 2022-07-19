@@ -6,13 +6,23 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"tea"
 )
 
+func imMiddleWare() tea.HandlerFunc {
+	return func(context *tea.Context) {
+		fmt.Println("我是中间件")
+	}
+}
+
 func main() {
 	r := tea.New()
-	r.GET("/", func(c *tea.Context) {
+	v1 := r.Group("/api")
+	v1.Use(imMiddleWare())
+
+	v1.GET("/group", func(c *tea.Context) {
 		c.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
 	})
 

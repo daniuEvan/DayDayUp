@@ -25,6 +25,10 @@ type Context struct {
 
 	// response info
 	StatusCode int
+
+	// middleware
+	middlewareHandlers []HandlerFunc
+	index              int // middleware 索引
 }
 
 // newContext is constructor of Context
@@ -34,6 +38,7 @@ func newContext(w http.ResponseWriter, req *http.Request) *Context {
 		Req:    req,
 		Path:   req.URL.Path,
 		Method: req.Method,
+		index:  -1,
 	}
 }
 
@@ -92,4 +97,12 @@ func (context *Context) HTML(code int, html string) {
 	context.SetHeader("Content-Type", "text/html")
 	context.Status(code)
 	context.Writer.Write([]byte(html))
+}
+
+func (context *Context) Next() {
+	context.index++
+	s := len(context.middlewareHandlers)
+	for ; context.index < s; context.index++ {
+		context.middlewareHandlers[context.index](context)
+	}
 }

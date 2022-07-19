@@ -93,6 +93,10 @@ func (r *router) handle(c *Context) {
 		key := c.Method + "-" + n.pattern
 		r.handlers[key](c)
 	} else {
-		c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
+		c.middlewareHandlers = append(c.middlewareHandlers, func(c *Context) {
+			c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
+		})
+		//c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)
 	}
+	c.Next()
 }

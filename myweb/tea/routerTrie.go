@@ -6,7 +6,6 @@
 package tea
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -72,7 +71,6 @@ func (n *node) search(parts []string, height int) *node {
 
 	for _, child := range children {
 		result := child.search(parts, height+1)
-		fmt.Println(result)
 		if result != nil {
 			return result
 		}
