@@ -1,8 +1,12 @@
-module DayDayUp
+module DayDayUp/myweb
 
 go 1.18
 
-require github.com/gin-gonic/gin v1.8.1
+require (
+	github.com/gin-gonic/gin v1.8.1
+	github.com/unrolled/secure v1.12.0
+	tea v0.0.0-00010101000000-000000000000
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -24,3 +28,5 @@ require (
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
+
+replace tea => ./tea
