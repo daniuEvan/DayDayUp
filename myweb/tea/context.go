@@ -17,9 +17,12 @@ type Context struct {
 	// origin objects
 	Writer http.ResponseWriter
 	Req    *http.Request
+
 	// request info
 	Path   string
 	Method string
+	Params map[string]string
+
 	// response info
 	StatusCode int
 }
@@ -53,6 +56,12 @@ func (context *Context) Status(code int) {
 // SetHeader set header
 func (context *Context) SetHeader(key string, value string) {
 	context.Writer.Header().Set(key, value)
+}
+
+// Param 获取请求参数
+func (context *Context) Param(key string) string {
+	value, _ := context.Params[key]
+	return value
 }
 
 // String response hold String
