@@ -30,6 +30,12 @@ func New() *Engine {
 	return engine
 }
 
+func Default() *Engine {
+	engine := New()
+	engine.Use(Logger(), Recovery())
+	return engine
+}
+
 // addRouter 路由添加
 func (engine *Engine) addRouter(method string, pattern string, handlerFunc HandlerFunc) {
 	engine.router.addRouter(method, pattern, handlerFunc)
